@@ -5,6 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry exported="true" kind="lib" path="D:/jarcache/gradle/caches/artifacts-14/filestore/com.sun.mail/javax.mail/1.4.4/jar/d0a04db60bab7f7d6796eb13513a82f9547978ce/javax.mail-1.4.4.jar" sourcepath="D:/jarcache/gradle/caches/artifacts-14/filestore/com.sun.mail/javax.mail/1.4.4/source/9a3edcd52cf891e7492776174e5a26cc7911b26/javax.mail-1.4.4-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="D:/jarcache/gradle/caches/artifacts-14/filestore/com.lexicalscope.jewelcli/jewelcli/0.7.6/jar/37518fa10524af5ea98d12615cf5c67464de9531/jewelcli-0.7.6.jar" sourcepath="D:/jarcache/gradle/caches/artifacts-14/filestore/com.lexicalscope.jewelcli/jewelcli/0.7.6/source/5bc533b0475c32a38434c734416cb72ab2c8563f/jewelcli-0.7.6-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="D:/jarcache/gradle/caches/artifacts-14/filestore/javax.activation/activation/1.1/jar/e6cb541461c2834bdea3eb920f1884d1eb508b50/activation-1.1.jar" sourcepath="D:/jarcache/gradle/caches/artifacts-14/filestore/javax.activation/activation/1.1/source/3697e9f67a2ed7ac5f589cff30f21173299440/activation-1.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

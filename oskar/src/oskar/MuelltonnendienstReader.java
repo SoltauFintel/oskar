@@ -3,8 +3,6 @@ package oskar;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +18,6 @@ import java.util.Map;
  * </pre>
  */
 public class MuelltonnendienstReader {
-	private static final SimpleDateFormat f = new SimpleDateFormat("d.M.yyyy");
 
 	public List<Muelltonnendienst> read(String dn) throws IOException {
 		BufferedReader r = new BufferedReader(new FileReader(dn));
@@ -58,20 +55,12 @@ public class MuelltonnendienstReader {
 		int o = zeile.indexOf("\t");
 		int tag = Integer.parseInt(zeile.substring(0, o).trim());
 		Muelltonnendienst m = new Muelltonnendienst();
-		m.setDatum(toDate(tag + "." + monat + "." + jahr));
+		m.setDatum(DateService.toDate(tag + "." + monat + "." + jahr));
 		String art = zeile.substring(o + 1).trim();
 		m.setArt(vars.get(art));
 		if (m.getArt() == null) {
 			m.setArt(art);
 		}
 		return m;
-	}
-	
-	public static java.sql.Date toDate(String datum) {
-		try {
-			return new java.sql.Date(f.parse(datum).getTime());
-		} catch (ParseException e) {
-			throw new RuntimeException("Fehler beim Konvertieren des Datums '" + datum + "'", e);
-		}
 	}
 }

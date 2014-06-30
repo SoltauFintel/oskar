@@ -1,11 +1,12 @@
 package oskar;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.mail.MessagingException;
+
+import uk.co.flamingpenguin.jewel.cli.ArgumentValidationException;
+import uk.co.flamingpenguin.jewel.cli.CliFactory;
 
 /**
  * Oskar aus der Mülltonne
@@ -18,11 +19,17 @@ import javax.mail.MessagingException;
 public class Oskar {
 	public static int mailcounter = 0;
 	
-	public static void main(String[] args) throws IOException {
-		System.out.println("Oskar aus der Muelltonne");
-		List<String> empfaenger = new ArrayList<String>();
-		empfaenger.add("marcus.warm@geneva-id.com");
-		new Oskar().start("D:\\muelltonnen.txt", new java.sql.Date(System.currentTimeMillis()), empfaenger, false);
+	public static void main(String[] args) throws IOException, ArgumentValidationException {
+		System.out.println("Oskar aus der Mülltonne\n");
+		CommandLine cli = CliFactory.parseArguments(CommandLine.class, args);
+		System.out.println("Abfallkalender :  " + cli.getConfig());
+		if (cli.isRaus()) {
+			System.out.println("Modus          :  rausstellen ->");
+		} else {
+			System.out.println("Modus          :  <- reinstellen");
+		}
+		System.out.println("Emailadressen  :  " + cli.getEmpfaenger() + "\n");
+		new Oskar().start(cli.getConfig(), new java.sql.Date(System.currentTimeMillis()), cli.getEmpfaenger(), cli.isRaus());
 	}
 	
 	public boolean start(String dn, java.sql.Date heute, List<String> empfaenger, boolean rausstellen) throws IOException {
@@ -32,7 +39,7 @@ public class Oskar {
 		// Wenn freitags die Tonne an der Straße stehen muss, dann muss montags drauf die Info zum Reinstellen kommen.
 		if (rausstellen) {
 			for (Muelltonnendienst d : list) {
-				if (vortag(d.getDatum()).equals(heute)) {
+				if (DateService.vortag(d.getDatum()).equals(heute)) {
 					meldungen += "[" + d.getDatum() + "] Mülltonne einen Tag vorher rausstellen: " + d.getArt() + "\r\n";
 				}
 			}
@@ -43,8 +50,10 @@ public class Oskar {
 				}
 			}
 		}
-		System.out.println(meldungen);
-		if (!meldungen.isEmpty()) {
+		if (meldungen.isEmpty()) {
+			System.out.println("- keine Meldungen -");
+		} else {
+			System.out.println(meldungen);
 			for (String email : empfaenger) {
 				MailService ms = new MailService();
 				try {
@@ -57,12 +66,5 @@ public class Oskar {
 			}
 		}
 		return !meldungen.isEmpty();
-	}
-	
-	public static java.sql.Date vortag(java.sql.Date datum) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(datum);
-		c.add(Calendar.DAY_OF_MONTH, -1);
-		return new java.sql.Date(c.getTime().getTime());
 	}
 }
