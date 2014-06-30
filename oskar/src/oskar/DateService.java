@@ -4,6 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * @author Marcus Warm
+ * @since  30.06.2014
+ */
 public class DateService {
 	private static final SimpleDateFormat f = new SimpleDateFormat("d.M.yyyy");
 

@@ -12,10 +12,18 @@ dependencies {
 
 sourceSets {
 	main.java.srcDir 'src'
+	// Buildprozess ohne JUnit Test
 }
 
 repositories {
     maven {
     	url 'http://10.20.211.24/archiva/repository/internal'
     }
+}
+
+installApp << {
+	copy {
+		from: 'build/install/oskar'
+		to: '\\\\gi-kev-vt02\\oskar'
+	}
 }

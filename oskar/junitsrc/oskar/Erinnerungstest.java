@@ -12,7 +12,7 @@ public class Erinnerungstest {
 	
 	private List<String> getEmpfaenger() {
 		List<String> emailadressen = new ArrayList<String>();
-		// TODO Emailadresse eintragen:
+		// TODO Emailadresse eintragen, um Mail-versenden-Funktion ebenfalls zu testen:
 		// ret.add();
 		return emailadressen;
 	}

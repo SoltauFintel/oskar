@@ -1,11 +1,11 @@
-<project name="oskar" default="build">
+<project name="oskar" default="deploy">
+    <target name="deploy" depends="build">
+    	<copy todir="\\gi-kev-vt02\oskar"><fileset dir="build/install/oskar"/></copy>
+    </target>
     <target name="build">
     	<gradle task="--quiet installApp"/>
     </target>
-    <target name="jar">
-    	<gradle task="jar"/>
-    </target>
-    <target name="eclipse-marcus">
+    <target name="eclipse">
     	<gradle task="eclipse"/>
     </target>
 	

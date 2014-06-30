@@ -5,6 +5,12 @@ import java.util.List;
 import uk.co.flamingpenguin.jewel.cli.Option;
 import uk.co.flamingpenguin.jewel.cli.Unparsed;
 
+/**
+ * Oskar Kommandozeilenoptionen
+ * 
+ * @author Marcus Warm
+ * @since  30.06.2014
+ */
 public interface CommandLine {
 
 	/**

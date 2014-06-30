@@ -1,5 +1,11 @@
 package oskar;
 
+/**
+ * Eintrag aus Mülltonnen-Datei
+ * 
+ * @author Marcus Warm
+ * @since  30.06.2014
+ */
 public class Muelltonnendienst {
 	private java.sql.Date datum; // ohne Uhrzeit
 	private String art;
