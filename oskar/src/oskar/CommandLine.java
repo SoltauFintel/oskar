@@ -19,6 +19,12 @@ public interface CommandLine {
 	String getConfig();
 	
 	/**
+	 * @return Sender Emailadresse
+	 */
+	@Option(shortName = "s")
+	String getSender();
+	
+	/**
 	 * @return Emailadressen
 	 */
 	@Unparsed

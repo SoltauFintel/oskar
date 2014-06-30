@@ -20,7 +20,7 @@ public class Oskar {
 	public static int mailcounter = 0;
 	
 	public static void main(String[] args) throws IOException, ArgumentValidationException {
-		System.out.println("Oskar aus der Mülltonne\n");
+		System.out.println("Oskar aus der Mülltonne 2.0\n");
 		CommandLine cli = CliFactory.parseArguments(CommandLine.class, args);
 		System.out.println("Abfallkalender :  " + cli.getConfig());
 		if (cli.isRaus()) {
@@ -28,11 +28,14 @@ public class Oskar {
 		} else {
 			System.out.println("Modus          :  <- reinstellen");
 		}
-		System.out.println("Emailadressen  :  " + cli.getEmpfaenger() + "\n");
-		new Oskar().start(cli.getConfig(), new java.sql.Date(System.currentTimeMillis()), cli.getEmpfaenger(), cli.isRaus());
+		if (cli.getEmpfaenger() != null) {
+			System.out.println("Emailadressen  :  " + cli.getEmpfaenger());
+		}
+		System.out.println();
+		new Oskar().start(cli.getConfig(), cli.getSender(), cli.getEmpfaenger(), cli.isRaus(), new java.sql.Date(System.currentTimeMillis()));
 	}
 	
-	public boolean start(String dn, java.sql.Date heute, List<String> empfaenger, boolean rausstellen) throws IOException {
+	public boolean start(String dn, String sender, List<String> empfaenger, boolean rausstellen, java.sql.Date heute) throws IOException {
 		List<Muelltonnendienst> list = new MuelltonnendienstReader().read(dn);
 		String meldungen = "";
 		// WAS FEHLT: wenn die Tonne montags an der Straße stehen muss, dann muss freitags die Info zum Rausstellen kommen.
@@ -54,17 +57,22 @@ public class Oskar {
 			System.out.println("- keine Meldungen -");
 		} else {
 			System.out.println(meldungen);
-			for (String email : empfaenger) {
-				MailService ms = new MailService();
-				try {
-					ms.send("Datum: " + heute + "\r\n\n" + meldungen,
-							"Mülldienst", "Oskar <marcus.warm@geneva-id.com>", email, true, false);
-					mailcounter++;
-				} catch (MessagingException e) {
-					e.printStackTrace();
-				}
+			if (empfaenger != null) {
+				sendeMails("Datum: " + heute + "\r\n\n" + meldungen, sender, empfaenger);
 			}
 		}
 		return !meldungen.isEmpty();
+	}
+
+	private void sendeMails(String text, String sender, List<String> emailadressen) {
+		for (String email : emailadressen) {
+			MailService ms = new MailService();
+			try {
+				ms.send(text, "Mülldienst", "Oskar <" + sender + ">", email, true, false);
+				mailcounter++;
+			} catch (MessagingException e) {
+				e.printStackTrace(); // kein Programmabbruch
+			}
+		}
 	}
 }

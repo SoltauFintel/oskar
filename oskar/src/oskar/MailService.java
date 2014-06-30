@@ -1,6 +1,3 @@
-/*
- * Copyright 2011 GENEVA-ID GmbH. All rights reserved.
- */
 package oskar;
 
 import java.util.ArrayList;
@@ -42,7 +39,6 @@ public class MailService {
 	 * @param plaintext Mailtext
 	 * @param subject Betreff
 	 * @param from Absender Emailadresse
-	 * z.B. "Nachtwaechter <marcus.warm@geneva-id.com>"
 	 * @param to Empfänger Emailadresse(n)
 	 * <br>Trennzeichen: Komma
 	 * @param wichtig
