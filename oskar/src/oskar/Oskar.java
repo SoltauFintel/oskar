@@ -37,6 +37,11 @@ public class Oskar {
 	
 	public boolean start(String dn, String sender, List<String> empfaenger, boolean rausstellen, java.sql.Date heute) throws IOException {
 		List<Muelltonnendienst> list = new MuelltonnendienstReader().read(dn);
+		if (list.size() == 1) {
+			System.out.println("1 Abfallkalendereintrag geladen");
+		} else {
+			System.out.println(list.size() + " Abfallkalendereintr‰ge geladen");
+		}
 		String meldungen = "";
 		// WAS FEHLT: wenn die Tonne montags an der Straﬂe stehen muss, dann muss freitags die Info zum Rausstellen kommen.
 		// Wenn freitags die Tonne an der Straﬂe stehen muss, dann muss montags drauf die Info zum Reinstellen kommen.

@@ -16,6 +16,7 @@ public interface CommandLine {
 	/**
 	 * @return true: rausstellen, false: reinstellen
 	 */
+	@Option
 	boolean isRaus();
 
 	/**
