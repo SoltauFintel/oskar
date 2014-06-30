@@ -1,0 +1,38 @@
+def s   = schwarz
+def sg  = schwarz+Glas
+def b   = braun
+def bgg = braun+grün+gelb
+
+jahr: 2014
+Monat: 7
+3	s
+10	b
+17	s
+24	bgg
+31	sg
+Monat: 8
+7	b
+14	s
+21	bgg
+28	s
+Monat: 9
+4	b
+11	s
+18	bgg
+25	sg
+Monat: 10
+2	b
+9	s
+16	bgg
+23	s
+30	b
+Monat: 11
+6	s
+13	bgg
+20	sg
+27	b
+Monat: 12
+4	s
+11	bgg
+18	s
+24	b
