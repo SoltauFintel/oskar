@@ -20,10 +20,3 @@ repositories {
     	url 'http://10.20.211.24/archiva/repository/internal'
     }
 }
-
-installApp << {
-	copy {
-		from: 'build/install/oskar'
-		to: '\\\\gi-kev-vt02\\oskar'
-	}
-}
