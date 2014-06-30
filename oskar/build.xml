@@ -1,0 +1,20 @@
+<project name="oskar" default="build">
+    <target name="build">
+    	<gradle task="--quiet installApp"/>
+    </target>
+    <target name="jar">
+    	<gradle task="jar"/>
+    </target>
+    <target name="eclipse-marcus">
+    	<gradle task="eclipse"/>
+    </target>
+	
+	<macrodef name="gradle">
+		<attribute name="task"/>
+		<sequential>
+	        <exec executable="cmd" failonerror="true">
+	            <arg line="/c gradlew.cmd -g D:\jarcache\gradle @{task}"/>
+	        </exec>
+		</sequential>
+	</macrodef>
+</project>
