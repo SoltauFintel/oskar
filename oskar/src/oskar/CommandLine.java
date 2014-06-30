@@ -14,13 +14,19 @@ import uk.co.flamingpenguin.jewel.cli.Unparsed;
 public interface CommandLine {
 
 	/**
-	 * @return true: rausstellen, false: reinstellen
+	 * @return true: rausstellen, false: nichts machen
 	 */
 	@Option
 	boolean isRaus();
 
 	/**
-	 * @return Configdatei, z.B. D:\muelltonnen.txt
+	 * @return true: reinstellen, false: nichts machen
+	 */
+	@Option
+	boolean isRein();
+
+	/**
+	 * @return Abfallkalenderdatei, z.B. D:\oskar\muelltonnen.txt
 	 */
 	@Option(shortName = "c")
 	String getConfig();

@@ -18,30 +18,41 @@ import uk.co.flamingpenguin.jewel.cli.CliFactory;
  */
 public class Oskar {
 	public static int mailcounter = 0;
+	private List<Muelltonnendienst> list;
 	
 	public static void main(String[] args) throws IOException, ArgumentValidationException {
 		System.out.println("Oskar aus der M¸lltonne 2.0\n");
 		CommandLine cli = CliFactory.parseArguments(CommandLine.class, args);
 		System.out.println("Abfallkalender :  " + cli.getConfig());
-		if (cli.isRaus()) {
-			System.out.println("Modus          :  rausstellen ->");
-		} else {
-			System.out.println("Modus          :  <- reinstellen");
-		}
 		if (cli.getEmpfaenger() != null) {
 			System.out.println("Emailadressen  :  " + cli.getEmpfaenger());
 		}
-		System.out.println();
-		new Oskar().start(cli.getConfig(), cli.getSender(), cli.getEmpfaenger(), cli.isRaus(), new java.sql.Date(System.currentTimeMillis()));
+		final java.sql.Date heute = new java.sql.Date(System.currentTimeMillis());
+		Oskar oskar = new Oskar(cli.getConfig());
+		if (cli.isRein()) {
+			System.out.println("<- reinstellen");
+			oskar.start(cli.getSender(), cli.getEmpfaenger(), false, heute);
+		}
+		if (cli.isRaus()) {
+			System.out.println("rausstellen ->");
+			oskar.start(cli.getSender(), cli.getEmpfaenger(), true, heute);
+		}
 	}
 	
-	public boolean start(String dn, String sender, List<String> empfaenger, boolean rausstellen, java.sql.Date heute) throws IOException {
-		List<Muelltonnendienst> list = new MuelltonnendienstReader().read(dn);
+	/**
+	 * @param dn Abfallkalender Dateiname
+	 * @throws IOException 
+	 */
+	public Oskar(String dn) throws IOException {
+		list = new MuelltonnendienstReader().read(dn);
 		if (list.size() == 1) {
-			System.out.println("1 Abfallkalendereintrag geladen");
+			System.out.println("1 Abfallkalendereintrag geladen\n");
 		} else {
-			System.out.println(list.size() + " Abfallkalendereintr‰ge geladen");
+			System.out.println(list.size() + " Abfallkalendereintr‰ge geladen\n");
 		}
+	}
+	
+	public boolean start(String sender, List<String> empfaenger, boolean rausstellen, java.sql.Date heute) {
 		String meldungen = "";
 		// WAS FEHLT: wenn die Tonne montags an der Straﬂe stehen muss, dann muss freitags die Info zum Rausstellen kommen.
 		// Wenn freitags die Tonne an der Straﬂe stehen muss, dann muss montags drauf die Info zum Reinstellen kommen.
@@ -59,7 +70,7 @@ public class Oskar {
 			}
 		}
 		if (meldungen.isEmpty()) {
-			System.out.println("- keine Meldungen -");
+			System.out.println("- keine Meldungen -\n");
 		} else {
 			System.out.println(meldungen);
 			if (empfaenger != null) {
