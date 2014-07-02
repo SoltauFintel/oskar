@@ -21,13 +21,13 @@ public class Oskar {
 	private List<Muelltonnendienst> list;
 	
 	public static void main(String[] args) throws IOException, ArgumentValidationException {
-		System.out.println("Oskar aus der Mülltonne 2.0\n");
+		System.out.println("Oskar aus der Mülltonne 2.01\n");
 		CommandLine cli = CliFactory.parseArguments(CommandLine.class, args);
 		System.out.println("Abfallkalender :  " + cli.getConfig());
 		if (cli.getEmpfaenger() != null) {
 			System.out.println("Emailadressen  :  " + cli.getEmpfaenger());
 		}
-		final java.sql.Date heute = new java.sql.Date(System.currentTimeMillis());
+		final String heute = new java.sql.Date(System.currentTimeMillis()).toString();
 		Oskar oskar = new Oskar(cli.getConfig());
 		if (cli.isRein()) {
 			System.out.println("<- reinstellen");
@@ -52,19 +52,27 @@ public class Oskar {
 		}
 	}
 	
-	public boolean start(String sender, List<String> empfaenger, boolean rausstellen, java.sql.Date heute) {
+	/**
+	 * 
+	 * @param sender
+	 * @param empfaenger
+	 * @param rausstellen
+	 * @param heute JJJJ-MM-TT
+	 * @return
+	 */
+	public boolean start(String sender, List<String> empfaenger, boolean rausstellen, String heute) {
 		String meldungen = "";
 		// WAS FEHLT: wenn die Tonne montags an der Straße stehen muss, dann muss freitags die Info zum Rausstellen kommen.
 		// Wenn freitags die Tonne an der Straße stehen muss, dann muss montags drauf die Info zum Reinstellen kommen.
 		if (rausstellen) {
 			for (Muelltonnendienst d : list) {
-				if (DateService.vortag(d.getDatum()).equals(heute)) {
+				if (DateService.vortag(d.getDatum()).toString().equals(heute)) {
 					meldungen += "[" + d.getDatum() + "] Mülltonne einen Tag vorher rausstellen: " + d.getArt() + "\r\n";
 				}
 			}
 		} else { // Reinstellen Modus
 			for (Muelltonnendienst d : list) {
-				if (d.getDatum().equals(heute)) {
+				if (d.getDatum().toString().equals(heute)) {
 					meldungen += "[" + d.getDatum() + "] Mülltonne wieder reinstellen: " + d.getArt() + "\r\n";
 				}
 			}
